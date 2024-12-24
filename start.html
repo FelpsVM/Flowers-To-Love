@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Natal e Ano Novo</title>
+    <style>
+        *,
+        *::after,
+        *::before {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-color: #000;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--dark-color);
+            overflow: hidden;
+            perspective: 1000px;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .night {
+            position: fixed;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            filter: blur(0.1vmin);
+            background-image: radial-gradient(ellipse at top, transparent 0%, var(--dark-color)), radial-gradient(ellipse at bottom, var(--dark-color), rgba(145, 233, 255, 0.2)), repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), repeating-linear-gradient(189deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(7, 107, 42), rgb(240, 240, 240));
+        }
+
+        .message {
+            font-size: 2rem;
+            margin: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in-out, visibility 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .message.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .message.hide {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="night"></div>
+<div id="message1" class="message">Feliz Natal</div>
+<div id="message2" class="message">Feliz Ano Novo</div>
+<div id="message3" class="message">E saiba que eu sempre vou estar com você Manuela!💜</div>
+<div id="message4" class="message">Isso não é muito, mas é de coração! Passei o dia todo fazendo isso, espero que goste!</div>
+
+<script>
+    window.onload = function() {
+        let messages = [
+            document.getElementById('message1'),
+            document.getElementById('message2'),
+            document.getElementById('message3'),
+            document.getElementById('message4')
+        ];
+
+        let index = 0;
+
+        function showMessage() {
+            if (index < messages.length) {
+                // Exibe a mensagem atual
+                messages[index].classList.add('show');
+                
+                // Faz a mensagem desaparecer suavemente após 3 segundos
+                setTimeout(() => {
+                    messages[index].classList.add('hide'); // Aplica a animação de desaparecimento
+                    
+                    // Após a animação de desaparecimento, move para a próxima
+                    setTimeout(() => {
+                        messages[index].classList.remove('show', 'hide'); // Remove as classes
+                        index++;
+                        showMessage();
+                    }, 600); // 0.6 segundos de intervalo entre as mensagens
+                }, 3000); // A mensagem permanece visível por 3 segundos
+            } else {
+                // Após a última mensagem desaparecer, redireciona para flowers.html
+                setTimeout(() => {
+                    window.location.href = "flower.html";
+                }, 500); // A página "flowers.html" será aberta após 500ms
+            }
+        }
+
+        showMessage();
+    };
+</script>
+
+</body>
+</html>
